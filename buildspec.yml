@@ -29,7 +29,7 @@ phases:
       - docker build -t python-devops-project .
 
       - echo Tagging Docker image...
-      - docker tag python-devops-project:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/python-devops-project:latest
+      - docker tag python-devops-repo:latest 983488059002.dkr.ecr.eu-north-1.amazonaws.com/python-devops-repo:latest
 
   post_build:
     commands:
