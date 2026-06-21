@@ -1,4 +1,4 @@
-# Entire Project Oveview
+# Entire Project Overiew
 1. Developed a Flask application.
 2. Created unit tests using Pytest.
 3. Performed security scanning using Bandit.
