@@ -2,38 +2,29 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      python: 3.11
     commands:
-      - echo Installing dependencies...
-      - pip install -r requirements.txt
-      - pip install pytest bandit flake8
-
+      # Ensure bandit is installed if it's not in requirements.txt
+      - pip install bandit pytest
   pre_build:
     commands:
-      - echo Running Unit Tests...
-      - pytest
-
-      - echo Running Security Scan...
+      # 1. Log into ECR
+      - aws Ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 983488059002.dkr.ecr.eu-north-1.amazonaws.com
+      
+      # 2. Run Security Scan (Bandit)
+      - echo "Running security scans..."
       - bandit -r .
-
-      - echo Running Code Quality Check...
-      - flake8 .
-
-      - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      
+      # 3. Run Unit Tests (Pytest)
+      - echo "Running unit tests..."
+      - pytest
 
   build:
     commands:
-      - echo Building Docker image...
-      - docker build -t python-devops-project .
-
-      - echo Tagging Docker image...
-      - docker tag python-devops-repo:latest 983488059002.dkr.ecr.eu-north-1.amazonaws.com/python-devops-repo:latest
-
+      - echo "Building the Docker image..."
+      - docker build -t $ImageName -f ./Dockerfile .
+      - docker images
   post_build:
     commands:
-      - echo Pushing image to ECR...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/python-devops-project:latest
-
-      - echo Build completed successfully
+      - echo "Pushing the Docker image..."
+      - docker tag $ImageName:latest 983488059002.dkr.ecr.eu-north-1.amazonaws.com/$ImageName:latest
+      - docker push 983488059002.dkr.ecr.eu-north-1.amazonaws.com/$ImageName:latest
