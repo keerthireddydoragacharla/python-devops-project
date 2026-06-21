@@ -3,21 +3,14 @@ version: 0.2
 phases:
   install:
     commands:
-      # Ensure bandit is installed if it's not in requirements.txt
       - pip install bandit pytest
   pre_build:
     commands:
-      # 1. Log into ECR
-      - aws Ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 983488059002.dkr.ecr.eu-north-1.amazonaws.com
-      
-      # 2. Run Security Scan (Bandit)
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 983488059002.dkr.ecr.eu-north-1.amazonaws.com
       - echo "Running security scans..."
       - bandit -r .
-      
-      # 3. Run Unit Tests (Pytest)
       - echo "Running unit tests..."
       - pytest
-
   build:
     commands:
       - echo "Building the Docker image..."
