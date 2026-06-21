@@ -1,4 +1,4 @@
-Entire Project Oveview
+# Entire Project Oveview
 1. Developed a Flask application.
 2. Created unit tests using Pytest.
 3. Performed security scanning using Bandit.
@@ -7,62 +7,6 @@ Entire Project Oveview
 6. Stored images in Amazon ECR.
 7. Deployed containers to Amazon ECS.
 8. Automated build and deployment using AWS CodePipeline and CodeBuild.
-
-                   Developer
-                       |
-                       | git push
-                       v
-              +------------------+
-              |      GitHub      |
-              | python-devops-   |
-              |     project      |
-              +------------------+
-                       |
-                       | Trigger
-                       v
-              +------------------+
-              |  CodePipeline    |
-              +------------------+
-                       |
-                       v
-              +------------------+
-              |   CodeBuild      |
-              +------------------+
-                       |
-        --------------------------------
-        |              |              |
-        v              v              v
-   +---------+   +----------+   +----------+
-   | Pytest  |   | Bandit   |   | Flake8   |
-   | Testing |   | Security |   | Quality  |
-   +---------+   +----------+   +----------+
-                       |
-                       v
-              +------------------+
-              | Docker Build     |
-              | Dockerfile       |
-              +------------------+
-                       |
-                       v
-              +------------------+
-              | Amazon ECR       |
-              | Container Image  |
-              +------------------+
-                       |
-                       | (Current End State)
-                       v
-             Docker Image Stored
-
-| Service      | Purpose                               |
-| ------------ | ------------------------------------- |
-| GitHub       | Stores your source code               |
-| CodePipeline | Orchestrates the CI/CD workflow       |
-| CodeBuild    | Executes build and test stages        |
-| Pytest       | Runs unit tests                       |
-| Bandit       | Security vulnerability scanning       |
-| Flake8       | Code quality/linting checks           |
-| Docker       | Packages application into a container |
-| ECR          | Stores Docker images                  |
 
 
 ```mermaid
@@ -119,6 +63,18 @@ graph TD
     style PACKAGE fill:#F7FAFC,stroke:#E2E8F0,stroke-width:1px;
     style TARGET fill:#FFFDF5,stroke:#ECC94B,stroke-width:1px;
 ```
+
+| Service      | Purpose                               |
+| ------------ | ------------------------------------- |
+| GitHub       | Stores your source code               |
+| CodePipeline | Orchestrates the CI/CD workflow       |
+| CodeBuild    | Executes build and test stages        |
+| Pytest       | Runs unit tests                       |
+| Bandit       | Security vulnerability scanning       |
+| Flake8       | Code quality/linting checks           |
+| Docker       | Packages application into a container |
+| ECR          | Stores Docker images                  |
+
 
 
 # AWS ECS Deployment Steps
